@@ -1,0 +1,31 @@
+{
+  "env": {
+    "development": {
+      "presets": [
+        "env",
+        "react"
+      ],
+      "plugins": [
+        "grommet"
+      ]
+    },
+    "production": {
+      "presets": [
+        "env",
+        "react"
+      ],
+      "plugins": [
+        "grommet"
+      ]
+    },
+    "test": {
+      "presets": [
+        "env",
+        "react"
+      ],
+      "plugins": [
+        "grommet"
+      ]
+    }
+  }
+}

@@ -1,11 +1,12 @@
 import React from 'react';
+import Nav from './components/Nav';
 import Main from '../Main';
 
 export default function App(props) {
   return (
     <div className="app">
       <aside>
-        <nav><li>About</li></nav>
+        <Nav />
       </aside>
 
       <main>

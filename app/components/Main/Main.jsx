@@ -5,10 +5,9 @@ import { components } from '../../routes';
 import NotFound from './NotFound';
 
 function Main(props) {
-  const { route } = props
-  const segment = route.name.split('.')[0];
+  const { route } = props;
 
-  return createElement(components[segment] || NotFound);
+  return createElement(components[route.name] || NotFound);
 }
 
 export default routeNode('')(Main);

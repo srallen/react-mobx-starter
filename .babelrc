@@ -2,28 +2,43 @@
   "env": {
     "development": {
       "presets": [
-        "env",
+        // "env", Babel env preset doesn't work with anything less that stage-4 :(
+        "es2015",
+        "es2016",
+        "es2017",
+        "stage-1", // To use the stage 1 legacy decorator syntax. MobX docs still say to use those, so we will for now
         "react"
       ],
       "plugins": [
+        "transform-decorators-legacy",
         "grommet"
       ]
     },
     "production": {
       "presets": [
-        "env",
+        // "env",
+        "es2015",
+        "es2016",
+        "es2017",
+        "stage-1",
         "react"
       ],
       "plugins": [
+        "transform-decorators-legacy",
         "grommet"
       ]
     },
     "test": {
       "presets": [
-        "env",
+        // "env",
+        "es2015",
+        "es2016",
+        "es2017",
+        "stage-1",
         "react"
       ],
       "plugins": [
+        "transform-decorators-legacy",
         "grommet"
       ]
     }

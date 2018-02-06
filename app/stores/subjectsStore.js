@@ -11,19 +11,23 @@ export const SUBJECTS_STATUS = {
 export class SubjectsStore {
   @observable status = SUBJECTS_STATUS.IDLE;
   @observable subjects = [];
-  @observable currentSubject = {};
+  @observable metadata = {};
 
-  @action setSubjects(newSubjects) {
-    this.subjects = newSubjects;
+  @action setSubjects(response) {
+    this.subjects = response.subjects;
+    this.metadata = response.meta;
   }
 
   @action setStatus(newStatus) {
     this.status = newStatus;
   }
 
+  @computed get current() {
+    return this.subjects.find((element, index) => { return (index === 0); }) || null;
+  }
+
   clear() {
     this.subjects.clear();
-    this.currentSubject = {};
   }
 
   @action fetchSubjects() {
@@ -33,8 +37,8 @@ export class SubjectsStore {
       subject_set_id: '4240'
     }];
     return get('/subjects/queued', query)
-      .then((subjects) => {
-        this.setSubjects(subjects);
+      .then((response) => {
+        this.setSubjects(response);
       })
       .then(this.setStatus(SUBJECTS_STATUS.SUCCESS))
       .catch(action((error) => {

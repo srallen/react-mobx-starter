@@ -8,8 +8,16 @@ import { Box, Image } from 'grommet';
 export default class SubjectViewer extends React.Component {
   static propTypes = {
     subjectsStore: PropTypes.shape({
+      current: PropTypes.object,
       fetchSubjects: PropTypes.func
     })
+  }
+
+  static defaultProps = {
+    subjectsStore: {
+      current: null,
+      fetchSubjects: () => {}
+    }
   }
 
   componentDidMount() {
@@ -17,13 +25,15 @@ export default class SubjectViewer extends React.Component {
   }
 
   render() {
-    const { currentSubject } = this.props.subjectsStore;
+    const { current } = this.props.subjectsStore;
+
     return (
       <Box>
-        <Image 
-          fit="contain"
-          src="http://via.placeholder.com/500x500"
-        />
+        {current && current.locations &&
+          <Image
+            fit="contain"
+            src={current.locations[0][Object.keys(current.locations[0])[0]]}
+          />}
       </Box>
     );
   }

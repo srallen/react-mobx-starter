@@ -13,6 +13,28 @@ export default class Task extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  static propTypes = {
+    annotationsStore: PropTypes.shape({
+      annotations: PropTypes.object // MobX observable arrays are actually objects, so using array won't validate
+    }),
+    task: PropTypes.shape({
+      answers: PropTypes.array,
+      question: PropTypes.string,
+      type: PropTypes.string
+    })
+  }
+
+  static defaultProps = {
+    annotationsStore: {
+      annotations: []
+    },
+    task: {
+      answers: [],
+      question: '',
+      type: ''
+    }
+  }
+
   onChange(e) {
     if (e.target.checked) {
       this.props.annotationsStore.onAnnotationChange(e.target.value);
@@ -55,21 +77,3 @@ export default class Task extends React.Component {
     );
   }
 }
-
-Task.propTypes = {
-  annotationsStore: PropTypes.arrayOf(PropTypes.object),
-  task: PropTypes.shape({
-    answers: PropTypes.array,
-    question: PropTypes.string,
-    type: PropTypes.string
-  })
-};
-
-Task.defaultProps = {
-  annotationsStore: [],
-  task: {
-    answers: [],
-    question: '',
-    type: ''
-  }
-};

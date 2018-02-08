@@ -1,7 +1,6 @@
 import { observable, action, computed } from 'mobx';
 import workflowStore from './workflowStore';
 
-// TO DO: WHY IS THIS INSTANTIATING AS AN EMPTY OBJECT????????
 export class AnnotationsStore {
   @observable annotations = [];
 

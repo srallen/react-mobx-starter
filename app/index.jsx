@@ -5,12 +5,7 @@ import { useStrict } from 'mobx';
 import { Provider } from 'mobx-react';
 import AppLayout from './components/AppLayout';
 import createRouter from './createRouter';
-
-import subjectsStore from './stores/subjectsStore';
-
-const stores = {
-  subjectsStore
-};
+import stores from './stores';
 
 // For easier debugging
 window._____APP_STATE_____ = stores;

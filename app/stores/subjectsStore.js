@@ -23,14 +23,14 @@ export class SubjectsStore {
   }
 
   @computed get current() {
-    return this.subjects.find((element, index) => { return (index === 0); }) || null;
+    return this.subjects.find((subject, index) => { return (index === 0); }) || null;
   }
 
   clear() {
     this.subjects.clear();
   }
 
-  @action fetchSubjects() {
+  fetchSubjects() {
     this.setStatus(SUBJECTS_STATUS.FETCHING);
     const query = [{
       workflow_id: '2333',

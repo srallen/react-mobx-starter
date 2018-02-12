@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
-import { Box, Image } from 'grommet';
+import { Paragraph, Image } from 'grommet';
 
 @inject('subjectsStore')
 @observer
@@ -27,14 +27,17 @@ export default class SubjectViewer extends React.Component {
   render() {
     const { current } = this.props.subjectsStore;
 
+    if (current && current.locations) {
+      return (
+        <Image
+          fit="contain"
+          src={current.locations[0][Object.keys(current.locations[0])[0]]}
+        />
+      );
+    }
+
     return (
-      <Box>
-        {current && current.locations &&
-          <Image
-            fit="contain"
-            src={current.locations[0][Object.keys(current.locations[0])[0]]}
-          />}
-      </Box>
+      <Paragraph>Getting subjects...</Paragraph>
     );
   }
 }

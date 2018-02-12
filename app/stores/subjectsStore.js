@@ -22,12 +22,21 @@ export class SubjectsStore {
     this.status = newStatus;
   }
 
-  @computed get current() {
-    return this.subjects.find((subject, index) => { return (index === 0); }) || null;
+  @action getNextSubject() {
+    if (this.subjects.length > 0) {
+      Promise.resolve(this.subjects.remove(this.current))
+        .then(() => {
+          if (this.subjects.length === 0) {
+            this.fetchSubjects();
+          }
+        });
+    }
+
+    return null;
   }
 
-  clear() {
-    this.subjects.clear();
+  @computed get current() {
+    return this.subjects.find((subject, index) => { return (index === 0); }) || null;
   }
 
   fetchSubjects() {

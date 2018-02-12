@@ -6,8 +6,8 @@ import Workflow from './components/Workflow';
 export default function Classifier() {
   return (
     <Box direction="row" justify="center">
-      <SubjectViewer />
-      <Workflow />
+      <SubjectViewer basis="2/3" />
+      <Workflow basis="1/3" />
     </Box>
   );
 }

@@ -1,5 +1,6 @@
 import { observable, action, computed } from 'mobx';
 import workflowStore from './workflowStore';
+import subjectsStore from './subjectsStore';
 
 export class AnnotationsStore {
   @observable annotations = [];
@@ -37,7 +38,8 @@ export class AnnotationsStore {
   }
 
   onSubmit() {
-    this.clear();
+    Promise.resolve(this.clear())
+      .then(subjectsStore.getNextSubject());
   }
 }
 

@@ -1,38 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { inject, observer } from 'mobx-react';
+import { inject, observer, propTypes } from 'mobx-react';
 import { Box, Heading, RadioButton, Button } from 'grommet';
 
 @inject('annotationsStore')
 @observer
 export default class Task extends React.Component {
-  constructor() {
-    super();
-    
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
   static propTypes = {
     annotationsStore: PropTypes.shape({
-      annotations: PropTypes.object // MobX observable arrays are actually objects, so using array won't validate
+      annotations: propTypes.observableArray, // MobX observable arrays are actually objects, so using PropTypes.array won't validate
+      onAnnotationChange: PropTypes.func
     }),
-    task: PropTypes.shape({
-      answers: PropTypes.array,
+    task: propTypes.observableArrayOf(PropTypes.shape({ // MobX observable array
+      answers: propTypes.observableArray,
       question: PropTypes.string,
       type: PropTypes.string
-    })
+    }))
   }
 
   static defaultProps = {
     annotationsStore: {
-      annotations: []
+      annotations: [],
+      onAnnotationChange: () => {}
     },
-    task: {
+    task: [{
       answers: [],
       question: '',
       type: ''
-    }
+    }]
+  }
+
+  constructor() {
+    super();
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChange(e) {

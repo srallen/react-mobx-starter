@@ -9,6 +9,7 @@ export default class Task extends React.Component {
   static propTypes = {
     annotationsStore: PropTypes.shape({
       annotations: propTypes.observableArray, // MobX observable arrays are actually objects, so using PropTypes.array won't validate
+      lastAnnotation: PropTypes.object,
       onAnnotationChange: PropTypes.func
     }),
     task: propTypes.observableArrayOf(PropTypes.shape({ // MobX observable array
@@ -33,25 +34,24 @@ export default class Task extends React.Component {
   constructor() {
     super();
 
-    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(e) {
+  onChange(e, label) {
     if (e.target.checked) {
-      this.props.annotationsStore.onAnnotationChange(e.target.value);
+      this.props.annotationsStore.onAnnotationChange(label);
     }
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    console.log('called submit');
+    this.props.annotationsStore.onSubmit();
   }
 
   render() {
     const { question, answers, type } = this.props.task[0];
-
+    const { lastAnnotation } = this.props.annotationsStore;
     // The view could be abstracted out into a functional component for the task type
     // A strategy could be written to pick the right component for task type using props.task.type
     return (
@@ -59,15 +59,19 @@ export default class Task extends React.Component {
         <Heading level={3}>{question}</Heading>
         <form onSubmit={this.onSubmit}>
           <fieldset>
-            {answers.map((answer, index) => {
+            {answers.length > -1 && answers.map((answer, index) => {
+              const { label } = answer;
+              const checked = lastAnnotation && lastAnnotation.value && lastAnnotation.value === index;
+
               return (
                 <RadioButton
-                  key={answer.label}
-                  id={answer.label}
-                  value={answer.label}
-                  label={answer.label}
+                  key={label}
+                  id={label}
+                  value={label}
+                  label={label}
                   name={type}
-                  onChange={this.onChange}
+                  onChange={e => this.onChange.bind(e, index)}
+                  checked={checked}
                 />
               )
             })}

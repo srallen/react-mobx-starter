@@ -28,6 +28,10 @@ export class AnnotationsStore {
     this.setAnnotation(newAnnotation);
   }
 
+  onSubmit() {
+    this.clear();
+  }
+
   clear() {
     this.annotations.clear();
   }

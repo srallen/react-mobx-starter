@@ -1,10 +1,11 @@
 import React from 'react';
 import { Grommet, Grid, Box } from 'grommet';
+import DevTools from 'mobx-react-devtools';
 import Nav from './components/Nav';
 import Main from '../Main';
 
+// DevTools usage in readme on github: https://github.com/mobxjs/mobx-react-devtools
 // Use base grommet theme provided by grommet. Theme could be defined by using styled-theming and set in the app state.
-
 export default function AppLayout(props) {
   return (
     <Grommet theme="grommet">
@@ -57,6 +58,7 @@ export default function AppLayout(props) {
           <p>the footer</p>
         </Box>
       </Grid>
+      <DevTools />
     </Grommet>
   );
 }

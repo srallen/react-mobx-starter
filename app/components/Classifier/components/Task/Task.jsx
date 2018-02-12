@@ -34,12 +34,13 @@ export default class Task extends React.Component {
   constructor() {
     super();
 
+    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(e, label) {
+  onChange(value, e) {
     if (e.target.checked) {
-      this.props.annotationsStore.onAnnotationChange(label);
+      this.props.annotationsStore.onAnnotationChange(value);
     }
   }
 
@@ -61,7 +62,7 @@ export default class Task extends React.Component {
           <fieldset>
             {answers.length > -1 && answers.map((answer, index) => {
               const { label } = answer;
-              const checked = lastAnnotation && lastAnnotation.value && lastAnnotation.value === index;
+              const checked = lastAnnotation && lastAnnotation.value === index;
 
               return (
                 <RadioButton
@@ -70,7 +71,7 @@ export default class Task extends React.Component {
                   value={label}
                   label={label}
                   name={type}
-                  onChange={e => this.onChange.bind(e, index)}
+                  onChange={this.onChange.bind(this, index)}
                   checked={checked}
                 />
               )

@@ -10,6 +10,14 @@ export class AnnotationsStore {
     this.annotations = newAnnotations;
   }
 
+  @action removeAnnotation(annotation) {
+    this.annotations.remove(annotation);
+  }
+
+  @action clear() {
+    this.annotations.clear();
+  }
+
   @computed get lastAnnotation() {
     return this.annotations[this.annotations.length - 1] || null;
   }
@@ -18,11 +26,11 @@ export class AnnotationsStore {
     const { currentTaskKey } = workflowStore;
     const newAnnotation = { value, task: currentTaskKey };
     const currentStoredAnnotation = this.annotations.find((annotation, index) => {
-      return annotation[index].task === currentTaskKey;
+      return annotation && annotation.task === currentTaskKey;
     });
 
     if (currentStoredAnnotation) {
-      this.annotations.remove(currentStoredAnnotation);
+      this.removeAnnotation(currentStoredAnnotation);
     }
 
     this.setAnnotation(newAnnotation);
@@ -30,10 +38,6 @@ export class AnnotationsStore {
 
   onSubmit() {
     this.clear();
-  }
-
-  clear() {
-    this.annotations.clear();
   }
 }
 

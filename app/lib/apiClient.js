@@ -6,7 +6,7 @@ const apiRoot = 'https://panoptes-staging.zooniverse.org/api';
 // and by previous similar work: https://github.com/zooniverse/edu-api-front-end/blob/master/src/lib/edu-api.js
 // Edit to add superagent plugins like superagent-jsonapify
 
-export function get(endpoint, query) {
+function get(endpoint, query) {
   const request = superagent.get(`${apiRoot}${endpoint}`)
     .set('Content-Type', 'application/json')
     .set('Accept', 'application/vnd.api+json; version=1');
@@ -20,29 +20,33 @@ export function get(endpoint, query) {
   return request.then(response => response.body);
 }
 
-export function post(endpoint, data) {
+function post(endpoint, data) {
   return superagent.post(`${apiRoot}${endpoint}`)
     .set('Content-Type', 'application/json')
     .send(data)
     .then(response => response);
 }
 
-export function put(endpoint, data) {
+function put(endpoint, data) {
   return superagent.put(`${apiRoot}${endpoint}`)
     .set('Content-Type', 'application/json')
     .send({ data })
     .then(response => response);
 }
 
-export function del(endpoint) {
+function del(endpoint) {
   return superagent.delete(`${apiRoot}${endpoint}`)
     .set('Content-Type', 'application/json')
     .then(response => response);
 }
 
-window.exampleApiClient = {
+const requests = {
   get,
   post,
   put,
   del
 };
+
+export default requests;
+
+window.exampleApiClient = requests;

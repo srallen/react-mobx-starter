@@ -4,12 +4,17 @@ import sinon from 'sinon';
 import { shallow, mount } from 'enzyme';
 import { Paragraph, Image } from 'grommet';
 import SubjectViewer from './SubjectViewer';
-import subjectsStore from '../../../../stores/subjectsStore';
+import { SubjectsStore } from '../../../../stores/subjectsStore';
 
 describe('SubjectViewer', function() {
   let fetchSubjectsStub;
+  const subjectsStore = new SubjectsStore();
   before(function () {
     fetchSubjectsStub = sinon.stub(subjectsStore, 'fetchSubjects').callsFake(() => { });
+  });
+
+  after(function () {
+    subjectsStore.fetchSubjects.restore();
   });
 
   it('should render without crashing', function() {
@@ -39,12 +44,13 @@ describe('SubjectViewer', function() {
     before(function () {
       subjectsStore.setSubjects({
         subjects: [{ locations: [{ 'image/png': 'https://mock-image-source.com/image.png' }] }],
-        metadata: {}
+        meta: {}
       });
-      wrapper = mount(<SubjectViewer subjectsStore={subjectsStore} />);
+      console.log(subjectsStore.subjects)      
     });
 
     it('should render an Image component', function() {
+      const wrapper = mount(<SubjectViewer subjectsStore={subjectsStore} />);      
       expect(wrapper.find(Image)).to.have.lengthOf(1);
     });
   });

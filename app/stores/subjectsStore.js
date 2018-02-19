@@ -1,5 +1,5 @@
 import { observable, action, computed } from 'mobx';
-import { get } from '../lib/apiClient';
+import requests from '../lib/apiClient';
 
 export const SUBJECTS_STATUS = {
   IDLE: 'idle',
@@ -13,9 +13,9 @@ export class SubjectsStore {
   @observable subjects = [];
   @observable metadata = {};
 
-  @action setSubjects(response) {
-    this.subjects = response.subjects;
-    this.metadata = response.meta;
+  @action setSubjects({ subjects, meta }) {
+    this.subjects = subjects;
+    this.metadata = meta;
   }
 
   @action setStatus(newStatus) {
@@ -32,7 +32,7 @@ export class SubjectsStore {
         });
     }
 
-    return null;
+    this.fetchSubjects();
   }
 
   @computed get current() {
@@ -40,6 +40,7 @@ export class SubjectsStore {
   }
 
   fetchSubjects() {
+    const { get } = requests;
     this.setStatus(SUBJECTS_STATUS.FETCHING);
     const query = [{
       workflow_id: '2333',

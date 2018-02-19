@@ -16,12 +16,12 @@ export default class SubjectViewer extends React.Component {
   static defaultProps = {
     subjectsStore: {
       current: null,
-      fetchSubjects: () => {}
+      getNextSubject: () => {}
     }
   }
 
   componentDidMount() {
-    this.props.subjectsStore.fetchSubjects();
+    this.props.subjectsStore.getNextSubject();
   }
 
   render() {
